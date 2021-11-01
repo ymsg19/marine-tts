@@ -1,0 +1,3 @@
+[submodule "voicevox_engine"]
+	path = voicevox_engine
+	url = git@github.com:Hiroshiba/voicevox_engine.git
