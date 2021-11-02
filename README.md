@@ -1,4 +1,4 @@
-# CaptainTTS - Discord Bot
+# MarineTTS - Discord Bot
 
 VoiceVox エンジンを使用したチャット読み上げ Discord ボット（TTSボット）
 
