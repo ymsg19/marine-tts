@@ -1,7 +1,10 @@
 mod tts;
 
+use anyhow::Result;
 use std::io;
 use std::fs::File;
+
+use regex::Regex;
 
 use serenity::async_trait;
 use serenity::prelude::*;
@@ -72,18 +75,18 @@ impl SpeechContext {
     async fn speak(&self) {
         let guild = self.msg.guild(self.ctx.clone()).await.unwrap();
         let current_user = self.ctx.cache.current_user().await;
-        let voice_state = guild.voice_states.get(&current_user.id).unwrap();
 
-        if voice_state.channel_id.is_none() {
+        if guild.voice_states.get(&current_user.id).is_none() {
             return;
-        }
+        };
 
         let client = reqwest::Client::new();
 
         let member = guild.members.get(&self.msg.author.id).unwrap();
 
+        let content = self.get_validated_msg().unwrap();
         let res = client.post("http://0.0.0.0:50021/audio_query")
-            .query(&[("text", format!("{}さん: {}", member.display_name(), self.msg.content)), ("speaker", "0".to_string())])
+            .query(&[("text", format!("{}さん: {}", member.display_name(), content)), ("speaker", "0".to_string())])
             .send().await.unwrap().text().await.unwrap();
 
         let res = client.post("http://0.0.0.0:50021/synthesis?speaker=0")
@@ -109,6 +112,20 @@ impl SpeechContext {
                 }
             }
         }
+    }
+
+    fn get_validated_msg(&self) -> Result<String> {
+        if self.msg.content.clone().len() > 140 {
+            return Ok("長文略".to_string());
+        }
+
+        let mut content = self.msg.content.clone();
+
+        // Regex for checking if the message includes URL
+        let re = Regex::new(r"https?://[^\s]+").unwrap(); 
+        content = re.replace_all(content.as_str(), "URL").to_string();
+
+        Ok(content)
     }
 }
 
