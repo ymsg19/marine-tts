@@ -16,3 +16,6 @@ serde_json = "1.0.68"
 thiserror = "1.0.30"
 anyhow = "1.0.44"
 regex = "1.5.4"
+
+[target.aarch64-unknown-linux-gnu]
+linker = "aarch64-buildroot-linux-gnu-gcc"
