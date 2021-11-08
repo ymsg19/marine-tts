@@ -1,8 +1,8 @@
 version: '3'
 services:
-  app:
+  marine-tts:
     build: .
-    env_file: .env
+    env_file: marine-tts.env
     networks:
       marine-tts:
         ipv4_address: 172.16.0.10
