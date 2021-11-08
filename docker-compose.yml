@@ -1,0 +1,24 @@
+version: '3'
+services:
+  marine-tts:
+    build: .
+    env_file: marine-tts.env
+    networks:
+      marine-tts:
+        ipv4_address: 172.16.0.10
+    restart: always
+  voicevox:
+    image: aoirint/voicevox_engine:cpu-latest
+    ports:
+      - "50021:50021"
+    networks:
+      marine-tts:
+        ipv4_address: 172.16.0.11
+    restart: always
+
+networks:
+  marine-tts:
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.16.0.0
