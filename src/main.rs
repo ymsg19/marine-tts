@@ -135,7 +135,7 @@ struct MainThread {
 impl MainThread {
     async fn new(tx: Sender<SpeechContext>, token: String) -> Self {
         let framework = StandardFramework::new()
-        .configure(|c| c.prefix("cap."))
+        .configure(|c| c.prefix("t."))
         .group(&GENERAL_GROUP);
     
         let client = Client::builder(token)
