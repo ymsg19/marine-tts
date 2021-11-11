@@ -13,6 +13,14 @@ services:
       marine-tts:
         ipv4_address: 172.16.0.11
     restart: always
+    environment:
+      - BASE_IMAGE=cpu
+      - BASE_RUNTIME_IMAGE=runtime-env
+      - VOICEVOX_CORE_VERSION=ubuntu:focal
+      - VOICEVOX_CORE_EXAMPLE_VERSION=ubuntu:focal
+      - VOICEVOX_CORE_LIBRARY_NAME=core_cpu
+      - LIBTORCH_URL=https://download.pytorch.org/libtorch/cpu/libtorch-cxx11-abi-shared-with-deps-1.9.0%2Bcpu.zip
+      - USE_GLIBC_231_WORKAROUND=0
 
 networks:
   marine-tts:
