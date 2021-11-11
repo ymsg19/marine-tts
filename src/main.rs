@@ -85,11 +85,11 @@ impl SpeechContext {
         let member = guild.members.get(&self.msg.author.id).unwrap();
 
         let content = self.get_validated_msg().unwrap();
-        let res = client.post("http://172.0.0.11:50021/audio_query")
+        let res = client.post("http://172.16.0.11:50021/audio_query")
             .query(&[("text", format!("{}さん: {}", member.display_name(), content)), ("speaker", "0".to_string())])
             .send().await.unwrap().text().await.unwrap();
 
-        let res = client.post("http://172.0.0.11:50021/synthesis?speaker=0")
+        let res = client.post("http://172.16.0.11:50021/synthesis?speaker=0")
             .body(res)
             .send().await.unwrap();
         
