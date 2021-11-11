@@ -8,9 +8,7 @@ services:
         ipv4_address: 172.16.0.10
     restart: always
   voicevox:
-    image: aoirint/voicevox_engine:cpu-latest
-    ports:
-      - "50021:50021"
+    build: ./voicevox_engine
     networks:
       marine-tts:
         ipv4_address: 172.16.0.11
